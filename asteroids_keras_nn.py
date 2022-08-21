@@ -87,8 +87,9 @@ def build_model(nNeurons=30, lr = .035, input_shape=[5], gamma=2):
 tensorboard = TensorBoard(log_dir="logs/{}".format((time())))
 callback = [tf.keras.callbacks.EarlyStopping(monitor='loss', patience=5), tensorboard]
 
-class_weight = {0 : 1,
-				1 : 10}
+class_weight = {
+		0 : 1,
+		1 : 10}
 
 
 #working with the keras tuner system
@@ -105,9 +106,6 @@ def keras_build_model(hp):
 	optimizer = keras.optimizers.SGD(learning_rate=lr, momentum=0.9, nesterov=True, decay=1e-5)
 	model.compile(loss=BinaryFocalLoss(gamma=gamma), optimizer=optimizer, metrics=METRICS)
 	return model
-
-
-
 
 import keras_tuner
 

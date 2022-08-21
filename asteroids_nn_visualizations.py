@@ -68,25 +68,29 @@ X_train = pd.DataFrame(scaler.fit_transform(X_train), columns=cols)
 X_test  = pd.DataFrame(scaler.transform(X_test), columns=cols)
 
 
-# sns.pairplot(data=asteroids[['absolute_magnitude', 'est_diameter_max', 'relative_velocity', 'miss_distance', 'hazardous']], hue='hazardous', plot_kws={'alpha':0.1})
+# generates data about raw distribution, takes a while
+'''
+sns.pairplot(data=asteroids[['absolute_magnitude', 'est_diameter_max', 'relative_velocity', 'miss_distance', 'hazardous']], hue='hazardous', plot_kws={'alpha':0.1})
 
-# ax = sns.jointplot(data=asteroids, x='est_diameter_min', y='absolute_magnitude', hue='hazardous', alpha=0.1)
+ax = sns.jointplot(data=asteroids, x='est_diameter_min', y='absolute_magnitude', hue='hazardous', alpha=0.1)
 
-# ax.ax_joint.set_xscale('log')
+ax.ax_joint.set_xscale('log')
 
-# plt.tight_layout()
-# plt.show()
+plt.tight_layout()
+plt.show()
+'''
 
-
-# >>> asteroids.corr()
-#                           id  est_diameter_min  est_diameter_max  relative_velocity  miss_distance  absolute_magnitude  hazardous
-# id                  1.000000         -0.148322         -0.148322          -0.059176      -0.056510            0.277258  -0.123443
-# est_diameter_min   -0.148322          1.000000          1.000000           0.221553       0.142241           -0.560188   0.183363
-# est_diameter_max   -0.148322          1.000000          1.000000           0.221553       0.142241           -0.560188   0.183363
-# relative_velocity  -0.059176          0.221553          0.221553           1.000000       0.327169           -0.353863   0.191185
-# miss_distance      -0.056510          0.142241          0.142241           0.327169       1.000000           -0.264168   0.042302
-# absolute_magnitude  0.277258         -0.560188         -0.560188          -0.353863      -0.264168            1.000000  -0.365267
-# hazardous          -0.123443          0.183363          0.183363           0.191185       0.042302           -0.365267   1.000000
+'''
+>>> asteroids.corr()
+                          id  est_diameter_min  est_diameter_max  relative_velocity  miss_distance  absolute_magnitude  hazardous
+id                  1.000000         -0.148322         -0.148322          -0.059176      -0.056510            0.277258  -0.123443
+est_diameter_min   -0.148322          1.000000          1.000000           0.221553       0.142241           -0.560188   0.183363
+est_diameter_max   -0.148322          1.000000          1.000000           0.221553       0.142241           -0.560188   0.183363
+relative_velocity  -0.059176          0.221553          0.221553           1.000000       0.327169           -0.353863   0.191185
+miss_distance      -0.056510          0.142241          0.142241           0.327169       1.000000           -0.264168   0.042302
+absolute_magnitude  0.277258         -0.560188         -0.560188          -0.353863      -0.264168            1.000000  -0.365267
+hazardous          -0.123443          0.183363          0.183363           0.191185       0.042302           -0.365267   1.000000
+'''
 
 # does what it says on the box
 METRICS = [
@@ -101,7 +105,7 @@ METRICS = [
 	keras.metrics.AUC(name='prc', curve='PR'), # precision-recall curve
 ]
 
-# good for wrapping our model in sklearn API
+# good for wrapping our model in sklearn API, quick builds
 def build_model(nNeurons=30, lr = .035, input_shape=[5], gamma=2):
 	model = Sequential()
 	model.add(keras.layers.InputLayer(input_shape=[5]))
@@ -113,12 +117,13 @@ def build_model(nNeurons=30, lr = .035, input_shape=[5], gamma=2):
 	model.compile(loss=BinaryFocalLoss(gamma=gamma), optimizer=optimizer, metrics=METRICS)
 	return model
 
-
+#set up callbacks and misc. model variables
 tensorboard = TensorBoard(log_dir="logs/{}".format((time())))
 callback = [tf.keras.callbacks.EarlyStopping(monitor='loss', patience=5), tensorboard]
 
-class_weight = {0 : 1,
-				1 : 10}
+class_weight = {
+		0 : 1,
+		1 : 10}
 
 # train model
 model = build_model(nNeurons=20, gamma=1)
@@ -187,5 +192,3 @@ sns.pairplot(asteroids_test[['miss_distance', 'hazardous', 'relative_velocity', 
 plt.tight_layout()
 plt.show()
 
-#KERAS THINGS
-#repeated for simplicity
