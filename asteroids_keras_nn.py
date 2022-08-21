@@ -125,7 +125,7 @@ tuner.search(X_train,
 			y_train,
 			epochs=10,
 			validation_data=(X_test, y_test),
-			callbacks=[callback],
+			callbacks=[keras.callbacks.TensorBoard("logs/tuner/{}".format((time())))],
 			class_weight = class_weight)
 
 best_hp = tuner.get_best_hyperparameters()[0]
