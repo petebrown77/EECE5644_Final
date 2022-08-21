@@ -118,7 +118,7 @@ tuner = keras_tuner.RandomSearch(
 	executions_per_trial=5,
 	overwrite=True,
 	directory="asteroids_nn_tuning",
-	project_name="asteroids",
+	project_name="asteroids_tuning{}".format((time())),
 )
 
 tuner.search(X_train,
@@ -231,5 +231,5 @@ ConfusionMatrixDisplay.from_predictions(y_test, preds)
 plt.show()
 
 # for utility:
-# model.save('./tuned_nn.tf')
+model.save('./tuned_nn.tf')
 # model = keras.models.load_model('./tuned_nn.tf')
