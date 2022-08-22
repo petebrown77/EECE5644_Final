@@ -132,7 +132,7 @@ best_hp = tuner.get_best_hyperparameters()[0]
 best_hp.values
 # {'num_layers': 3, 'units': 30, 'lr': 0.009263303924328512, 'gamma': 0.11835983615085716}
 
-# summary = tuner.results_summary(num_trials=3)
+summary = tuner.results_summary(num_trials=3)
 
 # Results summary
 # Results in asteroids_nn_tuning/asteroids
@@ -232,4 +232,4 @@ plt.show()
 
 # for utility:
 model.save('./tuned_nn.tf')
-# model = keras.models.load_model('./tuned_nn.tf')
+model = keras.models.load_model('./tuned_nn.tf')
