@@ -21,3 +21,6 @@ This Python file tunes neural net parameters and trains final model
 
 *asteroids_nn_visualizations.py*
 Trains naive model + plots classification boundaries ( uncomment for specific ones )
+
+*tuned_nn.tf*
+contains our best neural net model
