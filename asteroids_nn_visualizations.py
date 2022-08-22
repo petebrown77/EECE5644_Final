@@ -18,7 +18,7 @@ from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report
 from sklearn.svm import SVC
-from sklearn.inspection import DecisionBoundaryDisplay
+#from sklearn.inspection import DecisionBoundaryDisplay
 
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 
